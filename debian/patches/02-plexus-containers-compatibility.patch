@@ -1,0 +1,56 @@
+Description: Fixes the compatibility with the version of plexus-container-default in Debian
+Author: Emmanuel Bourg <ebourg@apache.org>
+Forwarded: no
+--- a/src/main/java/org/codehaus/plexus/component/factory/bsh/BshComponentFactory.java
++++ b/src/main/java/org/codehaus/plexus/component/factory/bsh/BshComponentFactory.java
+@@ -25,6 +25,11 @@
+ public class BshComponentFactory
+     extends AbstractComponentFactory
+ {
++    public String getId()
++    {
++        return "bsh";
++    }
++
+     public Object newInstance( ComponentDescriptor componentDescriptor, ClassRealm containerRealm,
+                                PlexusContainer container )
+         throws ComponentInstantiationException
+@@ -69,23 +74,23 @@
+         {
+             containerRealm.display();
+             
+-            container.getLogger().info( "Error text: " + evalError.getErrorText() );
++            ((org.codehaus.plexus.DefaultPlexusContainer) container).getLogger().info( "Error text: " + evalError.getErrorText() );
+             
+             throw new ComponentInstantiationException( "Cannot build component for: " +
+-                                                       componentDescriptor.getComponentKey() +
++                                                       componentDescriptor.getHumanReadableKey() +
+                                                        "; unable to read BeanShell script", evalError );
+         }
+         catch ( FileNotFoundException e )
+         {
+             containerRealm.display();
+             throw new ComponentInstantiationException( "Cannot build component for: " +
+-                                                       componentDescriptor.getComponentKey() +
++                                                       componentDescriptor.getHumanReadableKey() +
+                                                        "; unable to read BeanShell script", e );
+         }
+         catch ( IOException e )
+         {
+             throw new ComponentInstantiationException( "Cannot build component for: " +
+-                                                       componentDescriptor.getComponentKey() +
++                                                       componentDescriptor.getHumanReadableKey() +
+                                                        "; unable to read BeanShell script", e );
+         }
+         finally
+--- a/src/test/java/org/codehaus/plexus/component/factory/bsh/BshComponentFactoryTest.java
++++ b/src/test/java/org/codehaus/plexus/component/factory/bsh/BshComponentFactoryTest.java
+@@ -12,7 +12,7 @@
+     public void testComponent()
+         throws Exception
+     {
+-        Hello hello = (Hello) lookup( Hello.ROLE );
++        Hello hello = (Hello) lookup( Hello.class );
+ 
+         assertNotNull( hello );
+ 

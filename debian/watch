@@ -1,0 +1,5 @@
+version=3
+opts="uversionmangle=s/alpha-7-SNAPSHOT/alpha-7/;s/-(alpha|beta)-/~$1/" \
+  http://svn.codehaus.org/plexus/tags/ \
+  plexus-bsh-factory-([0-9].*)/ debian debian/orig-tar.sh
+

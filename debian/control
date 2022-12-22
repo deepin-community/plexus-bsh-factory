@@ -1,0 +1,22 @@
+Source: plexus-bsh-factory
+Section: java
+Priority: optional
+Maintainer: Debian Java Maintainers <pkg-java-maintainers@lists.alioth.debian.org>
+Uploaders: Ludovic Claude <ludovic.claude@laposte.net>, Damien Raude-Morvan <drazzib@debian.org>
+Build-Depends: debhelper (>= 10), default-jdk, maven-debian-helper, junit4
+Build-Depends-Indep: libplexus-container-default1.5-java, libbsh-java
+Standards-Version: 4.1.0
+Vcs-Git: https://anonscm.debian.org/git/pkg-java/plexus-bsh-factory.git
+Vcs-Browser: https://anonscm.debian.org/cgit/pkg-java/plexus-bsh-factory.git
+Homepage: http://plexus.codehaus.org/
+
+Package: libplexus-bsh-factory-java
+Architecture: all
+Depends: ${misc:Depends}, libplexus-container-default1.5-java, libbsh-java
+Description: Plexus Beanshell Factory
+ The Plexus project provides a full software stack for creating and
+ executing software projects. Based on the Plexus container, the applications
+ can utilise component-oriented programming to build modular, reusable
+ components that can easily be assembled and reused.
+ .
+ This package provides a factory for instantiating BeanShell with Plexus.
